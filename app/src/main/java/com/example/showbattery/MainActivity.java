@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private Battery battery;
@@ -29,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
+            if (Objects.requireNonNull(intent.getAction()).equals(Intent.ACTION_BATTERY_CHANGED)) {
                 int level = intent.getIntExtra("level", 0);
                 int scale = intent.getIntExtra("scale", 100);
-                textView.setText("电量: " + String.valueOf(level * 100 / scale) + "%");
+                textView.setText("电量: " + level * 100 / scale + "%");
             }
         }
     }
